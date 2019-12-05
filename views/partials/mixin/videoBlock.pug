@@ -1,0 +1,7 @@
+//- 객채 를 받으면 객체에의 한 프로퍼티를 출력함
+mixin videoBlock(video = {})
+    .videoBlock
+        a(href=`videos/${video.id}`)
+            video.videoBlock__thumbneail(src=video.videoFile controls=true)
+            h4.videoBlock__title=video.title
+            h6.videoBlock__views=video.views

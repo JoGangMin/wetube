@@ -2,11 +2,12 @@ extends layouts/main
 include partials/mixin/videoBlock
 
 block content
-    .videos
+    .search__header
+        h2 searching for #{searchingBy}
+    .search__videos
         each item in videoDB
             +videoBlock({
                 videoFile:item.videoFile,
                 title:item.title,
                 views:item.views,
-                id:item.id,
             })
