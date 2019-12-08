@@ -13,7 +13,7 @@ import { localsMiddleweare } from './middleWears';
 const app = express();
 
 app.set('view engine', 'pug');
-
+app.use('/uploads', express.static('uploads'))
 
 app.use(helmet());
 app.use(morgan('tiny'))

@@ -1,50 +1,21 @@
-export const videoDB = [
-    {
-        id:324393,
-        title:'video awsome',
-        description:'this is somthing i love',
-        views:24,
-        videoFile:"https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
-        creater:{
-            id:121212,
-            name:"Gangmin",
-            email:'gang@min.com'
-        },
-    },
-    {
-        id:424394,
-        title:'video super',
-        description:'this is somthing i love',
-        views:24,
-        videoFile:"https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
-        creater:{
-            id:121212,
-            name:"Gangmin",
-            email:'gang@min.com'
-        },
-    },
-    {
-        id:524395,
-        title:'video nice',
-        description:'this is somthing i love',
-        views:24,
-        videoFile:"https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
-        creater:{
-            id:121212,
-            name:"Gangmin",
-            email:'gang@min.com'
-        },
-    },
-    {
-        id:624396,
-        title:'video hahaha',
-        description:'this is somthing i love',
-        views:24,
-        videoFile:"https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
-        creater:{
-            id:121212,
-            name:"Gangmin",
-            email:'gang@min.com'
-        },
-    },
-]
+import mongoose from "mongoose"
+import dotenv from "dotenv"
+dotenv.config()
+//mongoose 를 사용하여 mongoDB에 연결시킨다.
+mongoose.connect(process.env.MONGO_URL,{ 
+    useFindAndModify: true,
+    useUnifiedTopology: true
+})
+
+const db = mongoose.connection;
+
+const hendelOpen = ()=>{
+    console.log('✅ connected to db')
+}
+
+const hendelError = (error)=>{
+    console.log(`❌ error DB Connection:${error}`)
+}
+
+db.once('open',hendelOpen) //db가 open이 되면 안네메세지를 출력
+db.on('error',hendelError) // db에 에러가 나면 에러메시지를 출력
