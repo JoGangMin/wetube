@@ -6,7 +6,6 @@ import Video from '../models/Video'
 export const home = async (req, res)=>{
         try{
             const videoDB = await Video.find() // find video in mongodb
-            console.log(videoDB)
             res.render('home',{pageTitle:'home',videoDB})
         } 
         catch(error){
@@ -16,7 +15,6 @@ export const home = async (req, res)=>{
 }
 
 export const search =(req, res)=>{
-
     const {
         query:{term:searchingBy}
     }=req
@@ -40,11 +38,50 @@ export const postUpload = async(req, res)=>{
     res.redirect(routes.videoDetail(newVideo.id))
 }
 
-export const videoDetail = (req, res)=>{
-    console.log(req.params)
-    res.render('videoDetail',{pageTitle:'videoDetil',})
+export const videoDetail = async (req, res)=>{
+    const {params:{id}}=req
+    const video = await Video.findById(id); // db에서 id 값으로 찾은 비디오
+    try{
+        console.log(video)
+        res.render('videoDetail',{pageTitle:video.title,video})
+    }
+    catch(error){
+        console.log(error)
+        res.redirect(routes.home)
+    }
 }
 
-export const editVideo = (req, res)=>{res.render('editVideo',{pageTitle:'editVideo'})}
+export const getEditVideo = async (req, res)=>{
+    const{params:{id}}=req
+    try{
+        const video =  await Video.findById(id)
 
-export const deliteVideo = (req, res)=>{res.send(`DELITE_VIDEO! for video id ${req.params.id}`)}
+        res.render('editVideo',{pageTitle:`edit ${video.title}`,video})
+    }
+    catch(error){
+        console.log(error)
+        res.redirect(routes.home)
+    }
+    
+}
+export const postEditVideo = async (req, res)=>{
+    const {body:{title,description},params:{id}}=req
+    try{
+        await Video.findOneAndUpdate({_id: id},{ title, description })
+        res.redirect(routes.videoDetail(id))
+    }
+    catch(error){
+        
+    }
+}
+
+export const deliteVideo = async(req, res)=>{
+    const {params:{id}}=req
+    try {
+       await  Video.findOneAndRemove({ _id:id });
+    } 
+    catch (error) {
+        console.log(error)
+    }
+    res.redirect(routes.home)
+}
