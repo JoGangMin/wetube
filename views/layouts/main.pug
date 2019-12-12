@@ -4,10 +4,10 @@ html
         meta(http-equiv="Content-Type", content="text/html;charset=UTF-8")
         title #{pageTitle} | #{siteName}
         script(src="https://kit.fontawesome.com/f6eb5c5884.js",crossorigin="anonymous")
+        link(rel="stylesheet", href="/static/styles.css")
     body
-        header
-            include ../partials/header
+        include ../partials/header
         main
             block content
-        footer
-            include ../partials/footer
+        include ../partials/footer
+        script(src="/static/main.js")
